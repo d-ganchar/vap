@@ -1,5 +1,5 @@
 import base64 as b64
-from typing import Tuple
+from typing import Tuple, Union
 
 from fastecdsa import curve as fe_curve, keys as fe_keys, ecdsa as fe_ecdsa
 from fastecdsa.encoding import der as fe_der, pem as fe_pem
@@ -85,7 +85,7 @@ class _EcdsaWrapper:
         else:
             raise VasError(f'unknown signature format {sig_fmt}')
 
-    def _sig_decode(self, sig: str | bytes | bytearray, sig_fmt: int = None) -> (int, int):
+    def _sig_decode(self, sig: Union[str, bytes, bytearray], sig_fmt: int = None) -> (int, int):
         if sig_fmt is None:
             sig_fmt = self.SIGFMT
 
@@ -96,7 +96,7 @@ class _EcdsaWrapper:
         elif sig_fmt == self.SIGHEX:
             return fe_der.DEREncoder.decode_signature(bytes.fromhex(sig))
 
-    def verify(self, message: MsgTypes, sig: str | bytes | bytearray, sig_fmt: int = None) -> bool:
+    def verify(self, message: MsgTypes, sig: Union[str, bytes, bytearray], sig_fmt: int = None) -> bool:
         if sig_fmt is None:
             sig_fmt = self.SIGFMT
 
