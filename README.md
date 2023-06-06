@@ -1,5 +1,12 @@
 # vap - [Verify Apple Postback](https://developer.apple.com/documentation/storekit/skadnetwork/verifying_an_install-validation_postback#3599761)
 
+[![Slava Ukraini](https://img.shields.io/badge/Slava-Ukraini-FFD500?style=flat&labelColor=005BBB)](https://bank.gov.ua/en/news/all/natsionalniy-bank-vidkriv-spetsrahunok-dlya-zboru-koshtiv-na-potrebi-armiyi) [![Support Ukraine](https://img.shields.io/badge/Support-Ukraine-FFD500?style=flat&labelColor=005BBB)](https://opensource.fb.com/support-ukraine)
+
+[![Python versions](https://img.shields.io/pypi/pyversions/vap.svg?logo=python&logoColor=81B441)](https://docs.python.org/3/)
+[![Code size](https://img.shields.io/github/languages/code-size/d-ganchar/vap.svg?logo=Dropbox&logoColor=ACD2F6)](https://github.com/d-ganchar/vap/tree/master/vap)
+[![PyPI version](https://img.shields.io/pypi/v/vap.svg?logo=pypi&logoColor=FFE200)](https://pypi.org/project/vap/)
+[![Build Status](https://api.travis-ci.com/d-ganchar/vap.svg?branch=master)](https://www.travis-ci.com/github/d-ganchar/vap)
+
 #### How to install:
 ```bash
 $ pip install vap
