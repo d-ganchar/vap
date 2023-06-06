@@ -1,6 +1,6 @@
 from setuptools import setup
 
-long_description = """vas
+long_description = """vap
 =======================
 
 Apple postback verifier. See `readme`_
@@ -8,14 +8,14 @@ Apple postback verifier. See `readme`_
 Installation
 ------------
 
-    $ pip install vas
+    $ pip install vap
 
-.. _readme: https://github.com/d-ganchar/vas
+.. _readme: https://github.com/d-ganchar/vap
 """
 
 
 setup(
-    name='vas',
+    name='vap',
     version='1.0.0',
     description='Apple postback verifier',
     long_description=long_description,
@@ -24,11 +24,11 @@ setup(
     author_email='danila.ganchar@gmail.com',
     license='MIT',
     keywords='verify apple signature postback',
-    packages=['vas'],
+    packages=['vap'],
     install_requires=['fastecdsa==2.1.2'],
     entry_points={
         'console_scripts': [
-            'vas = vas.cli:run',
+            'vap = vap.cli:run',
         ],
     },
     classifiers=[

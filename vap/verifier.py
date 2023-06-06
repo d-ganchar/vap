@@ -6,7 +6,7 @@ from fastecdsa.encoding import der as fe_der, pem as fe_pem
 from fastecdsa.ecdsa import MsgTypes, Curve
 from hashlib import sha256
 
-from .errors import VasError
+from .errors import VapError
 
 
 """
@@ -83,7 +83,7 @@ class _EcdsaWrapper:
         elif sig_fmt == self.SIGHEX:
             return sig.hex()
         else:
-            raise VasError(f'unknown signature format {sig_fmt}')
+            raise VapError(f'unknown signature format {sig_fmt}')
 
     def _sig_decode(self, sig: Union[str, bytes, bytearray], sig_fmt: int = None) -> (int, int):
         if sig_fmt is None:

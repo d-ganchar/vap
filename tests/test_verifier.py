@@ -2,7 +2,7 @@ from parameterized import parameterized
 
 from unittest import TestCase
 
-from vas.verifier import verify_postback
+from vap.verifier import verify_postback
 
 
 class TestVerifier(TestCase):

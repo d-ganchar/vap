@@ -10,14 +10,14 @@ from .verifier import verify_postback
 
 def run():
     parser = argparse.ArgumentParser(
-        prog='vas',
+        prog='vap',
         description='postback Apple verifier',
-        epilog=f'vas v{pkg_resources.get_distribution("vas").version}',
+        epilog=f'vap v{pkg_resources.get_distribution("vap").version}',
     )
 
     subparsers = parser.add_subparsers(help='verify apple postback')
     postback = subparsers.add_parser('verify', help="""
-        vas verify '{"version": "4.0", ...}'
+        vap verify '{"version": "4.0", ...}'
     """)
 
     postback.add_argument('postback', help="""

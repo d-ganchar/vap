@@ -1,2 +1,0 @@
-class VasError(Exception):
-    pass

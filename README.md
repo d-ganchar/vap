@@ -1,19 +1,18 @@
-# vas - [Verify Apple's Signature](https://developer.apple.com/documentation/storekit/skadnetwork/verifying_an_install-validation_postback#3599761)
+# vap - [Verify Apple Postback](https://developer.apple.com/documentation/storekit/skadnetwork/verifying_an_install-validation_postback#3599761)
 
 #### How to install:
 ```bash
-$ pip install vas
+$ pip install vap
 ```
 
 #### How to use:
 ```bash
-$ vas verify '{"version": "4.0", "ad-network-id": "com.example", "source-identifier": "39", "app-id": 525463029, "transaction-id": "6aafb7a5-0170-41b5-bbe4-fe71dedf1e31", "redownload": false, "source-domain": "example.com", "fidelity-type": 1, "did-win": true, "coarse-conversion-value": "high", "postback-sequence-index": 0, "attribution-signature": "MEUCIQD4rX6eh38qEhuUKHdap345UbmlzA7KEZ1bhWZuYM8MJwIgMnyiiZe6heabDkGwOaKBYrUXQhKtF3P/ERHqkR/XpuA="}'
+$ vap verify '{"version": "4.0", "ad-network-id": "com.example", "source-identifier": "39", "app-id": 525463029, "transaction-id": "6aafb7a5-0170-41b5-bbe4-fe71dedf1e31", "redownload": false, "source-domain": "example.com", "fidelity-type": 1, "did-win": true, "coarse-conversion-value": "high", "postback-sequence-index": 0, "attribution-signature": "MEUCIQD4rX6eh38qEhuUKHdap345UbmlzA7KEZ1bhWZuYM8MJwIgMnyiiZe6heabDkGwOaKBYrUXQhKtF3P/ERHqkR/XpuA="}'
 # 1
 ```
 
 ```python
-from vas.verifier import verify_postback
-
+from vap.verifier import verify_postback
 
 # supported versions below:
 items = [
