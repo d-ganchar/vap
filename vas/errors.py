@@ -1,0 +1,2 @@
+class VasError(Exception):
+    pass

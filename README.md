@@ -1,36 +1,98 @@
-# Singular-SKAdNetwork-App
-Sample apps demonstrating the logic needed to implement SKAdNetwork as an ad network, publisher and advertiser.
+# vas - [Verify Apple's Signature](https://developer.apple.com/documentation/storekit/skadnetwork/verifying_an_install-validation_postback#3599761)
 
-This repo contains:
-1. Advertiser sample app
-2. Publisher sample app
-3. A server that simulates an ad network API (including ad signing)
+#### How to install:
+```bash
+$ pip install vas
+```
 
-***Note: to use SKAN 4 run the sample apps using XCode 14***
+#### How to use:
+```bash
+$ vas verify '{"version": "4.0", "ad-network-id": "com.example", "source-identifier": "39", "app-id": 525463029, "transaction-id": "6aafb7a5-0170-41b5-bbe4-fe71dedf1e31", "redownload": false, "source-domain": "example.com", "fidelity-type": 1, "did-win": true, "coarse-conversion-value": "high", "postback-sequence-index": 0, "attribution-signature": "MEUCIQD4rX6eh38qEhuUKHdap345UbmlzA7KEZ1bhWZuYM8MJwIgMnyiiZe6heabDkGwOaKBYrUXQhKtF3P/ERHqkR/XpuA="}'
+# 1
+```
 
-## How to Use the Advertiser Sample App
-- Open `SingularAdvertiserSampleApp.xcodeproj`
-- Run the app and follow the on-screen instructions
+```python
+from vas.verifier import verify_postback
 
-## How to Use the Publisher Sample App
-- Open `SingularPublisherSampleApp.xcodeproj`
-- Make sure that the `skadnetwork_server.py` is running (instructions below)
-- Modify the consts placeholders in `ViewController.m` to set your own parameters
-- Follow the steps in `ViewController.m` starting in `showAdClick`
-- Run the app and follow the on-screen instructions
 
-## How to Run skadnetwork_server.py
-- Place your private key (see below on how to generate it) in the same directory as the server in a file called `key.pem`
-- `cd skadnetwork-server`
-- `pip install -r requirements.txt` (make sure you are using python3)
-- `python skadnetwork_server.py`
+# supported versions below:
+items = [
+    {
+        'version': '2.1',
+        'ad-network-id': 'com.example',
+        'campaign-id': 42,
+        'transaction-id': '6aafb7a5-0170-41b5-bbe4-fe71dedf1e28',
+        'app-id': 525463029,
+        'attribution-signature': 'MEUCID6rbq3qt4GvFaAaynh5/LAcvn1d8CQTRhrZhLIxLKntAiEAo7IrvoMw6u2qDg6Tr5vIsEHXj'
+                                 'lLkPlCOL0ojJcEh3Qw=',
+        'redownload': True,
+        'source-app-id': 1234567891,
+        'conversion-value': 20,
+    },
+    {
+        'version': '3.0',
+        'ad-network-id': 'example123.skadnetwork',
+        'campaign-id': 42,
+        'transaction-id': '6aafb7a5-0170-41b5-bbe4-fe71dedf1e28',
+        'app-id': 525463029,
+        'attribution-signature': 'MEYCIQD5eq3AUlamORiGovqFiHWI4RZT/PrM3VEiXUrsC+M51wIhAPMANZA9c07raZJ64gVaXhB9'
+                                 '+9yZj/X6DcNxONdccQij',
+        'redownload': True,
+        'source-app-id': 1234567891,
+        'fidelity-type': 1,
+        'conversion-value': 20,
+        'did-win': True,
+    },
+    {
+        'version': '3.0',
+        'ad-network-id': 'example123.skadnetwork',
+        'campaign-id': 42,
+        'transaction-id': 'f9ac267a-a889-44ce-b5f7-0166d11461f0',
+        'app-id': 525463029,
+        'attribution-signature': 'MEUCIQDDetUtkyc/MiQvVJ5I6HIO1E7l598572Wljot2Onzd4wIgVJLzVcyAV+TXksGNoa0DTMXEP'
+                                 'gNPeHCmD4fw1ABXX0g=',
+        'redownload': True,
+        'fidelity-type': 1,
+        'did-win': False,
+    },
+    {
+        'version': '4.0',
+        'ad-network-id': 'com.example',
+        'source-identifier': '39',
+        'app-id': 525463029,
+        'transaction-id': '6aafb7a5-0170-41b5-bbe4-fe71dedf1e31',
+        'redownload': False,
+        'source-domain': 'example.com',
+        'fidelity-type': 1,
+        'did-win': True,
+        'coarse-conversion-value': 'high',
+        'postback-sequence-index': 0,
+        'attribution-signature': 'MEUCIQD4rX6eh38qEhuUKHdap345UbmlzA7KEZ1bhWZuYM8MJwIgMnyiiZe6heabDkGwOaKBYrUXQ'
+                                 'hKtF3P/ERHqkR/XpuA=',
+    },
+    {
+        'version': '4.0',
+        'ad-network-id': 'com.example',
+        'source-identifier': '5239',
+        'app-id': 525463029,
+        'transaction-id': '6aafb7a5-0170-41b5-bbe4-fe71dedf1e30',
+        'redownload': False,
+        'source-domain': 'example.com',
+        'fidelity-type': 1,
+        'did-win': True,
+        'conversion-value': 63,
+        'postback-sequence-index': 0,
+        'attribution-signature': 'MEUCIGRmSMrqedNu6uaHyhVcifs118R5z/AB6cvRaKrRRHWRAiEAv96ne3dKQ5kJpbsfk4eYiePmr'
+                                 'ZUU6sQmo+7zfP/1Bxo=',
+    },
+]
 
-Now you should have a server listening on port 8000 that serves ad network responses to the publisher sample app.
+for postback in items:
+    print(verify_postback(postback))
 
-## How to generate your public-private key pair
-- SKAdNetwork uses an ECDSA keypair with the `prime256v1` curve, generate it by using:\
-`openssl ecparam -name prime256v1 -genkey -noout -out companyname_skadnetwork_private_key.pem`
-- For more details see Apple's instructions [Here](https://developer.apple.com/documentation/storekit/skadnetwork/registering_an_ad_network)
-\
-\
-To learn more about Singular visit: [https://www.singular.net](https://www.singular.net)
+# True
+# True
+# True
+# True
+# True
+```
