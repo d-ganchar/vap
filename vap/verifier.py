@@ -114,44 +114,46 @@ _ecdsa_wrapper = _EcdsaWrapper(_APPLE_PUB_KEY)
 def verify_postback(postback: dict) -> bool:
     version = postback['version']
     float_version = float(version)
-    if float_version < 2.1:
+    if float_version < 2.1 or float_version >= 5:
         return False
 
-    did_win = str(postback['did-win']).lower() if postback.get('did-win') is not None else ''
-    campaign_id = str(postback['campaign-id']) if postback.get('campaign-id') is not None else ''
-    fidelity_type = str(postback['fidelity-type']) if postback.get('fidelity-type') is not None else ''
-    source_identifier = postback['source-identifier'] if postback.get('source-identifier') is not None else ''
-    source_app_id = str(postback['source-app-id']) if postback.get('source-app-id') is not None else ''
-    re_download = str(postback['redownload']).lower()
+    campaign_id = str(postback.get('campaign-id'))
     app_id = str(postback['app-id'])
+    redownload = str(postback.get('redownload')).lower()
     ad_network_id = postback['ad-network-id']
     transaction_id = postback['transaction-id']
-    message_items = []
+    source_identifier = postback.get('source-identifier') or ''
+    fidelity_type = str(postback.get('fidelity-type'))
+    did_win = str(postback.get('did-win')).lower()
+    source_domain = postback.get('source-domain') or ''
+    postback_sequence_index = str(postback.get('postback-sequence-index'))
+    source_app_id = postback.get('source-app-id')
 
-    if float_version >= 4:
-        if postback.get('postback-sequence-index') is None:
-            return False
+    if source_app_id is not None:
+        if float_version < 3:
+            source_app_id = str(source_app_id) if isinstance(source_app_id, int) else ''
+        else:
+            source_app_id = str(postback['source-app-id']) if postback['source-app-id'] > 0 else ''
 
-        seq_index = str(postback['postback-sequence-index'])
-        source_domain = postback.get('source-domain')
+    if 4 <= float_version < 5:
         if source_app_id:
-            message_items = [version, ad_network_id, source_identifier, app_id, transaction_id, re_download,
-                             source_app_id, fidelity_type, did_win, seq_index]
+            message_items = [version, ad_network_id, source_identifier, app_id, transaction_id, redownload,
+                             source_app_id, fidelity_type, did_win, postback_sequence_index]
         elif source_domain:
-            message_items = [version, ad_network_id, source_identifier, app_id, transaction_id, re_download,
-                             str(source_domain), fidelity_type, did_win, seq_index]
-    elif float_version >= 3:
+            message_items = [version, ad_network_id, source_identifier, app_id, transaction_id, redownload,
+                             source_domain, fidelity_type, did_win, postback_sequence_index]
+        else:
+            message_items = [version, ad_network_id, source_identifier, app_id, transaction_id, redownload,
+                             fidelity_type, did_win, postback_sequence_index]
+    elif 3 <= float_version < 4:
         if source_app_id:
-            message_items = [version, ad_network_id, campaign_id, app_id, transaction_id, re_download, source_app_id,
+            message_items = [version, ad_network_id, campaign_id, app_id, transaction_id, redownload, source_app_id,
                              fidelity_type, did_win]
         else:
-            message_items = [version, ad_network_id, campaign_id, app_id, transaction_id, re_download, fidelity_type,
+            message_items = [version, ad_network_id, campaign_id, app_id, transaction_id, redownload, fidelity_type,
                              did_win]
     else:
-        message_items = [version, ad_network_id, campaign_id, app_id, transaction_id, re_download, source_app_id]
-
-    if not message_items:
-        return False
+        message_items = [version, ad_network_id, campaign_id, app_id, transaction_id, redownload, source_app_id]
 
     message = u'\u2063'.join(message_items)
     return _ecdsa_wrapper.verify(message, postback['attribution-signature'])

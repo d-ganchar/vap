@@ -23,6 +23,22 @@ class TestVerifier(TestCase):
         ),
         (
             {
+                'version': '2.2',
+                'campaign-id': 10,
+                'attribution-signature': 'MEUCIFifsMbYBbcVqHRlHRHSdA1Ra9rLwNFikm5bhHq/FUw0AiEAr+hwYGpv5IH/a5xwXdTB2KoFm'
+                                         'LHxgPW/x1mvwT9jwfE=',
+                'fidelity-type': 0,
+                'transaction-id': 'ea032a08-c21a-496a-bdf8-cc30a8899c81',
+                'conversion-value': 0,
+                'did-win': False,
+                'ad-network-id': '4dzt52r2t5.skadnetwork',
+                'redownload': True,
+                'app-id': 1661087323,
+                'source-app-id': 0,
+            },
+        ),
+        (
+            {
                 'version': '3.0',
                 'ad-network-id': 'example123.skadnetwork',
                 'campaign-id': 42,

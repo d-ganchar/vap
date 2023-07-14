@@ -16,7 +16,7 @@ Installation
 
 setup(
     name='vap',
-    version='1.0.1',
+    version='1.1.0',
     description='Apple postback verifier',
     long_description=long_description,
     url='https://github.com/d-ganchar/vas',
